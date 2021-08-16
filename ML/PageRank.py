@@ -1,5 +1,12 @@
 import numpy as np
 import pandas as pd
+import os
+
+path = './result-csv'
+try:
+    os.mkdir(path)
+except FileExistsError:
+    pass
 
 class PageRank:
     def __init__(self, winner, loser):
@@ -61,4 +68,7 @@ class PageRank:
         dtc['player'] = self.df['player']
         dtc['pagerank'] = self.df['pagerank']
         
-        dtc.to_csv('pagerank.csv')
+        dtc.to_csv(f'{path}/pagerank.csv', encoding='UTF-8-sig')
+
+    def tocsv_df(self):
+        self.df.to_csv(f'{path}/df.csv', encoding='UTF-8-sig')
