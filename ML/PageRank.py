@@ -30,7 +30,7 @@ class PageRank:
         for i,j in zip(self.winner, self.loser):
             idx1 = self.df[self.df['player'] == i].index.tolist()
             idx2 = self.df[self.df['player'] == j].index.tolist()
-            self.df[j][idx1] = 1
+            self.df[j][idx1] += 1
             self.df['node'][idx2] += 1.0
 
         self.df['div'] = self.initial / self.df['node']
@@ -46,8 +46,8 @@ class PageRank:
             for j in range(1,self.n+1):
                 if i+1 == j:
                     pass
-                if data[i][j] == 1:
-                    result += data[j-1][self.n+2]
+                if data[i][j] > 0:
+                    result += data[j-1][self.n+2] * data[i][j]
             pgrk = (1-self.damping_factor)/self.n + self.damping_factor*result
             lst.append(pgrk)
         #####
@@ -55,3 +55,10 @@ class PageRank:
         self.df['pagerank'] = lst
 
         return self.df
+    
+    def tocsv(self):
+        dtc = pd.DataFrame()
+        dtc['player'] = self.df['player']
+        dtc['pagerank'] = self.df['pagerank']
+        
+        dtc.to_csv('pagerank.csv')
