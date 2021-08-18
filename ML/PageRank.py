@@ -49,7 +49,7 @@ class PageRank:
         for i in range(0,self.n):
             result = 0
             if data[i][self.n+1] == 0:
-                result += self.initial # 정규화가 안되서 무패자 점수 추가
+                result += self.initial # 정규화가 안되서 무패자 페이지랭크 추가
             for j in range(1,self.n+1):
                 if i+1 == j:
                     pass
